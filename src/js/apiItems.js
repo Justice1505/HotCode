@@ -21,17 +21,7 @@ export async function fetchTrendsGallery(e) {
   }
 }
 
-export async function fetchGenres() {
-  try {
-    const res = await axios.get(`${URL}/genre/movie/list?api_key=${KEY}`);
-    const genres = res.data.genres;
-    console.log(genres);
-    return genres;
-  } catch (error) {
-    console.error(error);
-  }
-}
-fetchGenres();
+
 
 export async function fetchById(movie_id) {
   try {
