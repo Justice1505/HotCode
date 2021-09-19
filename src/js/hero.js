@@ -7,6 +7,7 @@ const KEY = '15f17b74af157d4eeef693405d33f902';
 const refs = {
   form: document.querySelector('#search-form'),
   layout__list: document.querySelector('.layout__list'),
+  error__text: document.querySelector('.error-text')
 }
 let query = "";
 async function fetchQuery(query) {
@@ -24,8 +25,12 @@ const searchInput = (e) => {
   e.preventDefault();
   query = e.target.value;
     fetchQuery(query);
+    if (query.length <= 1) {
+      refs.error__text.innerHTML = 'Search result not successful. Enter the correct movie name and try again.';
+   }
+   else{refs.error__text.innerHTML =""}
   }
   export default searchInput ;
  refs.form.addEventListener('input', debounce(searchInput,100))
 
-
+ 

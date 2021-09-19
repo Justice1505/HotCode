@@ -12,6 +12,8 @@
   width: 20px;
   height: 32px;
   stroke: rgb(154, 160, 160);
+  position: absolute;
+  margin-left: 90%;
 }
 // .search-svg-use {
 //   fill: magenta;
@@ -46,4 +48,38 @@
   transition-property: border-bottom;
   transition-duration: 250ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+// .error-text {
+//   color: red;
+//   // justify-content: center;
+//   // align-items: center;
+//   position: absolute;
+//   display: block;
+// }
+// .error-div {
+//   justify-content: center;
+//   align-items: center;
+//   display: block;
+// }
+.libraryBtns {
+  display: flex;
+  justify-content: space-between;
+  width: 290px;
+  margin: auto;
+  & > button {
+    background-color: transparent;
+    color: white;
+    border-radius: 5px;
+    text-transform: uppercase;
+    border: 1px white solid;
+    width: 136px;
+    height: 44px;
+    &:hover,
+    &:focus {
+      border-color: transparent;
+      background-color: #ff6b01;
+    }
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
 }
