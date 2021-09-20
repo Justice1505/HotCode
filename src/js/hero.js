@@ -28,7 +28,7 @@ const searchInput = (e) => {
     if (query.length <= 1) {
       refs.error__text.innerHTML = 'Search result not successful. Enter the correct movie name and try again.';
    }
-   else{refs.error__text.innerHTML =""}
+   else{refs.error__text.innerHTML ="";}
   }
   export default searchInput ;
  refs.form.addEventListener('input', debounce(searchInput,100))
