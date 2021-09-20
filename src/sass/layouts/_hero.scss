@@ -49,18 +49,18 @@
   transition-duration: 250ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
-// .error-text {
-//   color: red;
-//   // justify-content: center;
-//   // align-items: center;
-//   position: absolute;
-//   display: block;
-// }
-// .error-div {
-//   justify-content: center;
-//   align-items: center;
-//   display: block;
-// }
+.error-text {
+  color: red;
+  // justify-content: center;
+  // align-items: center;
+  position: absolute;
+  display: block;
+}
+.error-div {
+  justify-content: center;
+  align-items: center;
+  display: block;
+}
 .libraryBtns {
   display: flex;
   justify-content: space-between;
