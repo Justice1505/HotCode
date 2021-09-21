@@ -2,6 +2,8 @@ body {
   height: 100%;
   font-family: 'Roboto', sans-serif;
   color: var(--main-color);
+  display: flex;
+  flex-direction: column;
 }
 .home-bcg {
   // 0 - 767
@@ -118,6 +120,8 @@ img {
   padding-bottom: 150px;
 }
 html {
-  position: relative;
-  min-height: 100%;
+  height: 100%;
+}
+.content {
+  flex: 1 0 auto;
 }
