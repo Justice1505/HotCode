@@ -25,10 +25,15 @@
   flex-wrap: wrap;
 }
 .attribut__item {
+  display: inline-block;
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
   color: var(--accent-color);
+}
+.attribut__item:not(:last-child) {
+  border-right: solid 1px var(--accent-color);
+  padding-right: 5px;
 }
 .attribut__item.rating__value {
   display: inline;
