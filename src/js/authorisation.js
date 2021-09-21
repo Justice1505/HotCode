@@ -27,19 +27,19 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth();
 
-// let database = database(app);
+// let database = firebase.database(app);
 
-const signUp = document.querySelector('.signUp');
-const logOut = document.querySelector('.logout');
+const signUpBtn = document.querySelector('.signUp');
+const logOutBtn = document.querySelector('.logout');
 
-logOut.classList.add('hidden');
-console.log(signUp);
+logOutBtn.classList.add('hidden');
+console.log(signUpBtn);
 const signUpForm = document.querySelector('#signup-form');
 const signUpModal = document.querySelector('#modal-signup');
 console.log(signUpModal);
 
-signUp.addEventListener('click', onSignUpClick);
-function onSignUpClick() {
+signUpBtn.addEventListener('click', onSignUpBtnClick);
+function onSignUpBtnClick() {
   signUpModal.classList.remove('hidden');
 }
 
@@ -55,9 +55,11 @@ signUpForm.addEventListener('submit', e => {
       const user = userCredential.user.uid;
       alert('registration successfull. Pls, confirm your email');
       signUpForm.reset();
-
       console.log(user);
-      signUpModal.classList.add('.hidden');
+      signUpModal.classList.add('hidden');
+      saveUserData();
+
+      // сделать закрытие модалки вместо hidden
     })
     .catch(error => {
       const errorCode = error.code;
@@ -67,27 +69,112 @@ signUpForm.addEventListener('submit', e => {
     });
 });
 
-const logIn = document.querySelector('.login');
-logIn.addEventListener('click', onLogInClick);
-function onLogInClick() {
+const logInBtn = document.querySelector('.login');
+logInBtn.addEventListener('click', onLogInBtnClick);
+function onLogInBtnClick() {
   logInModal.classList.remove('hidden');
 }
 
 const logInForm = document.querySelector('#login-form');
+console.log(logInForm);
 
 const logInModal = document.querySelector('#modal-login');
+
 logInForm.addEventListener('submit', e => {
   e.preventDefault();
-  const email = signUpForm.elements.email.value;
-  const password = signUpForm.elements.email.value;
+  const email = logInForm.elements.email.value;
+  const password = logInForm.elements.password.value;
   signInWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
-      const user = userCredential.user.uid;
+      const user = userCredential.user;
+      localStorage.setItem('email', password);
+      console.log(email, password, user);
+      logInForm.reset();
+      logOutBtn.classList.remove('hidden');
+      logInBtn.disabled = true;
+      logInModal.classList.add('hidden');
+      // заменить на функцию закрытия
     })
     .catch(error => {
       const errorCode = error.code;
-      console.log(errorCode);
+      alert(errorCode);
       const errorMessage = error.message;
-      console.log(errorMessage);
+      alert(errorMessage);
     });
 });
+// -------------logout
+
+console.log(logOutBtn);
+// function signOut() {
+//   user = undefined;
+//   localStorage.removeItem('userId');
+// }
+
+// function isLogIn() {
+//   return user !== undefined;
+// }
+
+logOutBtn.addEventListener('click', e => {
+  e.preventDefault();
+  auth.signOut().then(() => {
+    console.log('user signed out');
+  });
+});
+
+function checkUserStatus() {
+  // Auth state changes.
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      // User is signed in.
+      const userName = user.displayName;
+      const email = user.email;
+      const pass = user.password;
+      const uid = user.uid;
+
+      logOutBtn.classList.remove('hidden');
+      logInBtn.disabled = true;
+
+      console.log(
+        `Current user: ${userName}, user email: ${email}, user password: ${pass}, userId: ${uid}`,
+      );
+      getUserData(uid);
+    } else {
+      // User is signed out.
+      logOutBtn.classList.add('hidden');
+      logInBtn.disabled = false;
+    }
+  });
+}
+
+function getUserData(userId) {
+  return firebase
+    .database(app)
+    .ref('/users/' + userId)
+    .once('value');
+}
+function saveUserData(userId, name, email) {
+  firebase
+    .database(app)
+    .ref('users/' + userId)
+    .set(
+      {
+        username: name,
+        email: email,
+      },
+      error => {
+        if (error) {
+          console.log('Failed!');
+        } else {
+          console.log('User data saved successfully!');
+        }
+      },
+    );
+}
+
+function checkUserId() {
+  const userId = users.uid;
+  return firebase
+    .database(app)
+    .ref('/users/' + userId)
+    .once('value');
+}
