@@ -35,6 +35,7 @@ console.log(logInForm);
 const logInBtn = document.querySelector('.login');
 console.log(logInBtn);
 const logInModal = document.querySelector('#modal-login');
+const notification = document.querySelector('.error-text');
 
 // ------------дефолтные значения
 logOutBtn.classList.add('hidden');
@@ -67,7 +68,9 @@ signUpForm.addEventListener('submit', e => {
   createUserWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
       const user = userCredential.user.uid;
-      alert('registration successfull. Pls, confirm your email');
+      // alert('registration successfull. Pls, confirm your email');
+      notification.textContent = 'registration successfull. Pls, log in';
+      notification.style.color = '#008000';
       signUpForm.reset();
       signUpModal.classList.add('hidden');
       // saveUserData();
@@ -99,6 +102,8 @@ logInForm.addEventListener('submit', e => {
       localStorage.setItem('email', password);
       console.log(email, password, user);
       logOutBtn.classList.remove('hidden');
+      notification.textContent = 'Welcome to the HotCode Filmoteka!';
+      notification.style.color = '#008000';
       // logInBtn.disabled = true;
       logInBtn.classList.add('hidden');
       signUpBtn.classList.add('hidden');
@@ -126,6 +131,7 @@ logOutBtn.addEventListener('click', e => {
     signUpBtn.classList.remove('hidden');
     console.log('user signed out');
     accessHome();
+    localStorage.clear();
   });
 });
 
@@ -142,7 +148,7 @@ function checkUserStatus() {
       // logOutBtn.classList.remove('hidden');
       logInBtn.disabled = true;
       logOutBtn.disabled = false;
-
+      notification.textContent = 'Welcome to the HotCode Filmoteka!';
       console.log(
         `Current user: ${userName}, user email: ${email}, user password: ${pass}, userId: ${uid}`,
       );

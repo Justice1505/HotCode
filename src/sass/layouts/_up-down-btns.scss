@@ -1,0 +1,54 @@
+.up_down_btn {
+  position: fixed;
+  bottom: 25px;
+  right: 20px;
+  z-index: 9999;
+  width: 40px;
+  height: 40px;
+  font-size: 25px;
+  text-align: center;
+  line-height: 35px;
+  background: var(--accent-color);
+  color: var(--main-color);
+  cursor: pointer;
+  border-radius: 50%;
+  display: none;
+
+  @media screen and (min-width: 768px) {
+    line-height: 45px;
+    font-size: 30px;
+    width: 50px;
+    height: 50px;
+    bottom: 80px;
+    right: 20px;
+  }
+  @media screen and (min-width: 1024px) {
+    line-height: 50px;
+    font-size: 40px;
+    width: 60px;
+    height: 60px;
+    bottom: 85px;
+    right: 20px;
+  }
+
+  .up_down_btn__arrow {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+  }
+}
+
+.up_down_btn:hover {
+  text-decoration: none;
+  background: #ffa600;
+}
+
+.up_down_btn-show {
+  display: block;
+}
+
+.up_down_btn-disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0;
+}

@@ -149,26 +149,26 @@ main {
 }
 
 .watched__button:hover,
-.watched__button:focus,
+.watched__button:active,
 .watched__button.remove__watched,
 .queve__button.remove__queue {
   color: var(--white-color);
   background-color: var(--accent-color);
   border: none;
 }
-.watched__button.remove__watched:hover,
-.watched__button.remove__watched:focus,
-.queve__button.remove__queue:hover,
-.queve__button.remove__queue:focus {
-  color: var(--main-color);
-  border: 1px solid var(--main-color);
-  background-color: var(--white-color);
-}
 .queve__button:hover,
-.queve__button:focus {
+.queve__button:active {
   color: var(--white-color);
   background-color: var(--accent-color);
   border: none;
+}
+.watched__button.remove__watched:hover,
+.watched__button.remove__watched:active,
+.queve__button.remove__queue:hover,
+.queve__button.remove__queue:active {
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
+  background-color: var(--white-color);
 }
 
 .queve__button,
