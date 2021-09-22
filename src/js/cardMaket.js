@@ -2,14 +2,21 @@ import { fetchById } from './apiItems';
 import { fetchGenres } from './apiItems';
 import { fetchTrends } from './apiItems';
 import { renderMovieCard } from './modal';
-import { watchedActions, queueActions, checkup, removeFromQueue, removeFromWatched } from './localeStorage';
+import {
+  watchedActions,
+  queueActions,
+  checkup,
+  removeFromQueue,
+  removeFromWatched,
+} from './localeStorage';
 import { renderPagination } from './paginator';
 
 const BASEimgURL = 'https://image.tmdb.org/t/p/';
 const SIZE = 'w500';
 const layout__list = document.querySelector('.layout__list');
 document.addEventListener('DOMContentLoaded', fetchTrendsGallery);
-async function fetchTrendsGallery(e, page = 1) {
+
+export async function fetchTrendsGallery(e, page = 1) {
   try {
     const { results: movies, total_pages, page: pageFromRequest } = await fetchTrends(page);
     const genres = await fetchGenres();
@@ -31,19 +38,23 @@ async function fetchTrendsGallery(e, page = 1) {
     console.error(error);
   }
 }
-const defaultImg = "/xJWLN0r3hBFlpQyFzfUHYkh0JeM.jpg";
+const defaultImg = '/xJWLN0r3hBFlpQyFzfUHYkh0JeM.jpg';
 export default function renderGallery(newMovies) {
   layout__list.innerHTML = '';
   const markup = newMovies
     .map(movie => {
       return `<li class="layout__item">    
                       <a class="layout__link" href="" data-id="${movie.id}">
-                      <img class="layout__image" src="${BASEimgURL}${SIZE}${movie.poster_path? movie.poster_path: defaultImg
+                      <img class="layout__image" src="${BASEimgURL}${SIZE}${
+        movie.poster_path ? movie.poster_path : defaultImg
       }" alt="${movie.title}" width="" loading="lazy" />
                       </a>                      
                       <ul class="attribut__list">
                           <li class="attribut__item-title">${movie.original_title}</li>
-                          <li class="attribut__item">${movie.genre.map(gen => gen).slice(0, 3).join(', ')}</li>
+                          <li class="attribut__item">${movie.genre
+                            .map(gen => gen)
+                            .slice(0, 3)
+                            .join(', ')}</li>
                           <li class="attribut__item">${movie.release_date.slice(0, 4)}</li>
                       </ul>
                   </li>`;
@@ -57,7 +68,7 @@ export default function renderGallery(newMovies) {
 function onMovieClick(event) {
   event.preventDefault();
   const movie_id =
-  event.target.nodeName === 'IMG' ? event.target.parentNode.dataset.id : event.target.dataset.id;
+    event.target.nodeName === 'IMG' ? event.target.parentNode.dataset.id : event.target.dataset.id;
   // console.log(event.target.parentNode.dataset.id);
   // console.log(event.target.dataset.id);
   const movie = fetchById(movie_id).then(data => {
@@ -67,43 +78,26 @@ function onMovieClick(event) {
     const main = document.querySelector('main');
     main.classList.add('backdrop');
     modalBlock.innerHTML = renderMovieCard(data);
-    const buttonWatched = document.querySelector(".watched__button");
-    const buttonQueue = document.querySelector(".queve__button");
+    const buttonWatched = document.querySelector('.watched__button');
+    const buttonQueue = document.querySelector('.queve__button');
     buttonWatched.addEventListener('click', watchedActions);
     buttonQueue.addEventListener('click', queueActions);
-    if (localStorage.getItem("watchedArr")) {
-      const watchedArr = Array.from((JSON.parse(localStorage.getItem("watchedArr"))));
+    if (localStorage.getItem('watchedArr')) {
+      const watchedArr = Array.from(JSON.parse(localStorage.getItem('watchedArr')));
       if (checkup(id, watchedArr)) {
-        buttonWatched.classList.add("remove__watched")
+        buttonWatched.classList.add('remove__watched');
         // buttonWatched.classList.remove("watched__button");
-      buttonWatched.textContent = "Added to watched";
-      }
-    } 
-    if (localStorage.getItem("queueArr")) {
-      const queueArr = Array.from((JSON.parse(localStorage.getItem("queueArr"))));
-      if (checkup(id, queueArr)) {
-        buttonQueue.classList.add("remove__queue");
-        // buttonQueue.classList.remove("queve__button");
-        buttonQueue.textContent = "Added to Queue";
+        buttonWatched.textContent = 'Added to watched';
       }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    if (localStorage.getItem('queueArr')) {
+      const queueArr = Array.from(JSON.parse(localStorage.getItem('queueArr')));
+      if (checkup(id, queueArr)) {
+        buttonQueue.classList.add('remove__queue');
+        // buttonQueue.classList.remove("queve__button");
+        buttonQueue.textContent = 'Added to Queue';
+      }
+    }
 
     const closeButton = modalBlock.querySelector('.close__modal');
     closeButton.addEventListener('click', e => {

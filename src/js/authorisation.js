@@ -5,6 +5,8 @@ import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { onAuthStateChanged } from 'firebase/auth';
 import 'firebase/database';
+import { accessHome } from './switchHome-Library.js';
+import './apiItems.js';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyB9BkppnXfaYDAiVi6RvUMDrBOu1m_umL8',
@@ -123,6 +125,7 @@ logOutBtn.addEventListener('click', e => {
     logInBtn.classList.remove('hidden');
     signUpBtn.classList.remove('hidden');
     console.log('user signed out');
+    accessHome();
   });
 });
 
